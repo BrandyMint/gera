@@ -5,6 +5,7 @@ module Gera
     include Mathematic
     include AutoLogger
     include DirectionSupport
+    include Authority::Abilities
 
     self.table_name = 'direction_rates'
 

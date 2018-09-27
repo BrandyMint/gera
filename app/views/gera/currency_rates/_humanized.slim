@@ -1,0 +1,11 @@
+h2.m-b-md Список валют
+
+table.table.table-narrow.table-condensed
+  - (Money::Currency.all - [KZT]).each do |cur|
+    tr
+      - if cur == RUB
+        = render 'currency_rate_humanized', cur: cur, cur2: KZT
+      - else
+        - [USD, RUB].each do |cur2|
+          - unless cur2 == cur
+            = render 'currency_rate_humanized', cur: cur, cur2: cur2

@@ -1,0 +1,67 @@
+= simple_form_for [:admin, payment_system], wrapper_mappings: { boolean: :vertical_boolean } do |f|
+  .row
+    - columns.each do |column|
+      .col-md-3
+        = smart_input f, column
+
+  h2 Особенности кошельков
+  .row
+    - %i(income_account_type outcome_account_format income_wallets_selection cheque_format require_qiwi_phone).each do |column|
+      .col-md-3
+        = smart_input f, column
+
+    .col-md-3
+      = f.input :reserves_aggregator_id, as: :select, collection: Gera::PaymentSystem.where(reserves_aggregator_id: nil).ordered, include_blank: 'Самостоятельный'
+
+  h2 Приём оплаты
+  .row
+    - %i(require_unique_income manual_confirmation_available).each do |column|
+      .col-md-3
+        = smart_input f, column
+
+  h2 Ограничения
+  .row
+    - %i(auto_set_card minimal_income_amount maximal_income_amount).each do |column|
+      .col-md-3
+        = smart_input f, column
+
+  h2 Разрешения
+  .row
+    - %i(is_visible income_enabled outcome_enabled referal_output_enabled autopayout_enabled).each do |column|
+      .col-md-3
+        = smart_input f, column
+
+  h2 Позиции
+  .row
+    - %i(priority_in priority_out priority sort).each do |column|
+      .col-md-3
+        = smart_input f, column
+
+  h2 Комиссии
+  .row
+    - %i(internal_transfer commission income_fee).each do |column|
+      .col-md-3
+        = smart_input f, column
+
+  h2 Карты
+  .row
+    - %i(is_issuing_bank available_outcome_card_brands require_income_card_verification).each do |column|
+      .col-md-3
+        = smart_input f, column
+
+  h2 Прочее
+  .row
+    - %i(faq_link content_path_slug img pay_class show_notice direct_payment_url).each do |column|
+      .col-md-3
+        = smart_input f, column
+
+  h2 bestchange
+  .row
+    - %i(bestchange_id letter_cod bestchange_key).each do |column|
+      .col-md-3
+        = smart_input f, column
+
+  hr
+  .row
+    .col-md-12
+      = f.button :submit, class: 'btn btn-lg btn-primary'

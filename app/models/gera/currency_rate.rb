@@ -2,6 +2,7 @@ module Gera
   # Базовый курс
   class CurrencyRate < ApplicationRecord
     include CurrencyPairSupport
+    include Authority::Abilities
 
     self.table_name = 'currency_rates'
 

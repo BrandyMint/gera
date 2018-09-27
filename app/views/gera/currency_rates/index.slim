@@ -1,0 +1,25 @@
+= render 'menu'
+
+.row
+  .col-md-9
+    = render layout: 'currencies_table' do |pair|
+      - rate = rates.find_by_currency_pair pair
+      - rate_d = CurrencyRateDecorator.decorate rate
+      - if rate.present?
+        td.text-nowrap.text-right.v-middle.rate-popover class=currency_rate_class(rate) data=currency_rate_cell_data_attr(rate) title=rate_d.title
+          - if pair.same?
+            .text-muted &middot;
+          - else
+            = humanized_rate rate.rate_value, rate.currency_to
+      - else
+        td.text-nowrap.text-right.v-middle data-toggle=:tooltip data-container=:body data-html='true' title='курс отсутсвует' 
+          .text-muted &middot;
+
+    p 
+      | Курс актуален на 
+      em= l created_at, format: :long
+
+    p.text-success Зеленым отмечены кросс-курсы
+
+  .col-md-3
+    = render 'humanized'

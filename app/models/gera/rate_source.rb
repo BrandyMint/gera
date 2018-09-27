@@ -1,5 +1,6 @@
 module Gera
   class RateSource < ApplicationRecord
+    include Authority::Abilities
     extend CurrencyPairGenerator
     RateNotFound = Class.new StandardError
     self.table_name = 'rate_sources'

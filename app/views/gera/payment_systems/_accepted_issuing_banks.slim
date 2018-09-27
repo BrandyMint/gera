@@ -1,0 +1,21 @@
+h2 Карты каких банков принимаются этой платежной систепой
+.m-b-md.text-smal.text-muted Тут вводятся только ПС которым разрешено принимать карты
+table.table
+  - Gera::PaymentSystem.ordered.issuing_banks.each do |bank|
+    tr
+      td
+        span.m-r-md= ps_icon bank
+        = bank.name
+      td
+        - aib = payment_system.accepted_issuing_banks.find_by(issuing_bank: bank)
+        - if aib.present?
+          span.m-r-md.label.label-success= 'Принимается'
+          = link_to 'отключить', payment_system_accepted_issuing_bank_path(payment_system, aib), method: :delete, class: 'btn btn-sm btn-warning btn-outline'
+        - else
+          span.m-r-md.label.label-default= 'не принимается'
+          = link_to 'Подключить', payment_system_accepted_issuing_banks_path(payment_system, {issuing_bank_id: bank.id}), method: :create, class: 'btn btn-sm btn-success btn-outline'
+
+hr
+p 
+  | Результирующий список: 
+  span.text-muted= PaymentSystemDecorator.new(payment_system).accepted_issuing_banks

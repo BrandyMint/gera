@@ -4,6 +4,7 @@ module Gera
   class PaymentSystem < ApplicationRecord
     include ::Archivable
     include Gera::Mathematic
+    include Authority::Abilities
 
     self.table_name = :payment_systems
 

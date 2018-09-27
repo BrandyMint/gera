@@ -12,6 +12,7 @@
 # * on_corridor - в коридоре?
 module Gera
   class ExchangeRate < ApplicationRecord
+    include Authority::Abilities
 
     DEFAULT_COMISSION = 50
 
