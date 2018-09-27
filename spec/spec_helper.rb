@@ -6,6 +6,8 @@ require 'factory_bot'
 require 'pry'
 require 'database_rewinder'
 require 'vcr'
+require 'archivable'
+require 'authority'
 
 require 'timecop'
 

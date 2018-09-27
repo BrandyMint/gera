@@ -6,10 +6,10 @@
           | Матрица методов расчета
 
         p Название:
-        = best_in_place [:admin, snapshot], :title
+        = best_in_place snapshot, :title
         hr
         p Описание:
-        = best_in_place [:admin, snapshot], :details
+        = best_in_place snapshot, :details
       .col-md-3
         = crms_status_label snapshot.status
       .col-md-3
@@ -20,14 +20,9 @@
       = active_link_to 'Режимы', url_for(view_mode: :methods), wrap_tag: :li, active: view_mode == :methods
       = active_link_to 'Расчеты', url_for(view_mode: :calculations), wrap_tag: :li, active: view_mode == :calculations
 
-    = render 'admin/currency_rate_mode_snapshots/snapshot', snapshot: snapshot
+    = render 'snapshot', snapshot: snapshot
   .col-md-2
     = render 'currency_rate_mode_snapshots', current_snapshot: snapshot
-    hr
-    p= link_to 'Источник в google spreadsheet',
-      'https://docs.google.com/spreadsheets/d/1ySSUNaQRO5Fthg1QUTnnrfBFreWErH3585HalFBlONI/edit#gid=6539861',
-      target: '_blank'
-
 ul
   - if view_mode == :calculations
     li.text-success Зеленым цветом автоматический расчет

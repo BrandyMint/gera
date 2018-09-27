@@ -1,0 +1,5 @@
+ul.nav.nav-tabs.m-b-md
+  = active_link_to 'Базовые курсы', currency_rates_path, wrap_tag: :li
+  = active_link_to 'Конечные курсы', direction_rates_path, wrap_tag: :li
+  li.pull-right.m-t-sm.text-muted.text-small
+    = yield

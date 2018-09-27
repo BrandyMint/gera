@@ -4,28 +4,13 @@ module Gera
     authorize_actions_for PaymentSystem
 
     EDIT_COLUMNS = %i(
-      name system_type currency
-      payment_service_name
+      name icon_url currency
+      income_enabled outcome_enabled
     )
 
     SHOW_COLUMNS = %i(
-      id img name currency
-      accepted_issuing_banks
-      is_issuing_bank
-      outcome_account_format available_outcome_card_brands
-      system_type
-      minimal_income_amount maximal_income_amount
-      internal_transfer commission priority sort is_visible show_notice auto_set_card income_enabled outcome_enabled referal_output_enabled
-      require_unique_income
-      manual_confirmation_available require_income_card_verification
-      income_fee
-      faq_link direct_payment_url cheque_format
-      form_fields
-      priority_in priority_out
-      bestchange_id letter_cod bestchange_key
-      payment_service_name
-      income_wallets_selection
-      content_path_slug
+      id icon name currency
+      income_enabled outcome_enabled
       actions
     )
 

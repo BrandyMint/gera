@@ -1,8 +1,0 @@
-- object = CurrencyRateDecorator.decorate currency_rate
-.row
-  .col-md-6
-    h3 Базовый обменный курс (#{object.title})
-    = render 'attributes_table', object: object, columns: currency_rate_columns(currency_rate)
-  .col-md-6
-    .alert.alert-info
-      = currency_rate_mode_detailed currency_rate

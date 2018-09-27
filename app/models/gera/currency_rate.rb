@@ -32,6 +32,10 @@ module Gera
     end
 
     def to_s
+      currency_pair.to_s
+    end
+
+    def inspect
       "#{currency_pair}:#{humanized_rate}"
     end
 

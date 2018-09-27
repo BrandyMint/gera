@@ -35,8 +35,8 @@ module Gera::CurrencyRateModesHelper
   end
 
   def crms_cell_data_attr(crm)
-    url = crm.persisted? ? edit_admin_currency_rate_mode_path( crm, back: current_url) :
-      new_admin_currency_rate_mode_path(
+    url = crm.persisted? ? edit_currency_rate_mode_path( crm, back: current_url) :
+      new_currency_rate_mode_path(
         currency_rate_mode: crm.attributes.slice(*%w(currency_rate_mode_snapshot_id cur_from cur_to)),
         back: current_url)
     {

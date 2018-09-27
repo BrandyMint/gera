@@ -1,5 +1,3 @@
-require 'archivable'
-
 module Gera
   class PaymentSystem < ApplicationRecord
     include ::Archivable
