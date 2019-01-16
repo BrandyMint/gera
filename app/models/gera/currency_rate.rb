@@ -57,5 +57,15 @@ module Gera
     def meta
       @meta ||= OpenStruct.new metadata.deep_symbolize_keys
     end
+
+    def exchange(amount)
+      rate.exchange(amount, Money::Currency.find(cur_to))
+    end
+
+    private
+
+    def rate
+      RateFromMultiplicator.new(rate_value).freeze
+    end
   end
 end
