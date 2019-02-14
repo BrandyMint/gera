@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 module Gera::CurrencyRateModesHelper
   ICON_CLASS = {
     'draft' => 'battery-half',
     'active' => 'battery-charging',
-    'deactive' => 'battery-empty',
-  }
+    'deactive' => 'battery-empty'
+  }.freeze
 
   STATUS_CLASS = {
     'draft' => 'label-info',
     'active' => 'label-success',
-    'deactive' => 'label-default',
-  }
+    'deactive' => 'label-default'
+  }.freeze
 
   def currency_rate_mode_detailed(currency_rate, level = 0)
     buffer = []
@@ -35,10 +37,11 @@ module Gera::CurrencyRateModesHelper
   end
 
   def crms_cell_data_attr(crm)
-    url = crm.persisted? ? edit_currency_rate_mode_path( crm, back: current_url) :
+    url = crm.persisted? ? edit_currency_rate_mode_path(crm, back: current_url) :
       new_currency_rate_mode_path(
-        currency_rate_mode: crm.attributes.slice(*%w(currency_rate_mode_snapshot_id cur_from cur_to)),
-        back: current_url)
+        currency_rate_mode: crm.attributes.slice('currency_rate_mode_snapshot_id', 'cur_from', 'cur_to'),
+        back: current_url
+      )
     {
       toggle: :popover,
       container: :body,
@@ -56,7 +59,7 @@ module Gera::CurrencyRateModesHelper
     content_tag :span, status, class: "label #{STATUS_CLASS[status]}"
   end
 
-  def currency_rate_mode_snapshot_icon crms
+  def currency_rate_mode_snapshot_icon(crms)
     ion_icon ICON_CLASS[crms.status]
   end
 

@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 module Gera
   module ApplicationHelper
     MINIMAL_EPSILON = 0.001
 
     def humanized_currency_rate(rate_value, pair, currency)
-      if rate_value < 1
-        rate = '%.9f' % rate_value.to_f
-      else
-        rate = '%.3f' % rate_value.to_f
-      end
+      rate = if rate_value < 1
+               format('%.9f', rate_value.to_f)
+             else
+               format('%.3f', rate_value.to_f)
+             end
 
       if pair.first == currency
         "#{rate} #{currency}" # покупка
@@ -44,20 +46,20 @@ module Gera
       }
     end
 
-    def rate_diff(rv1, rv2, reverse = false)
-      return rate_diff(1.0/rv1, 1.0/rv2, true) if rv1 < 1
+    def rate_diff(rv1, rv2, _reverse = false)
+      return rate_diff(1.0 / rv1, 1.0 / rv2, true) if rv1 < 1
 
       diff = rv2 - rv1
       return 0 if diff.abs.round(3) == 0
 
       p = 100 * diff / rv2
 
-      buffer = "#{'%.2f' % p.round(3)}%"
+      buffer = "#{format('%.2f', p.round(3))}%"
       content_tag :span, buffer, data: { toggle: :tooltip, title: "#{rv2} - #{rv1}" }
     end
 
     def rate_with_currency(rate, currency)
-      rate = '%.12f' % rate if rate.is_a?(Float) && rate < MINIMAL_EPSILON
+      rate = format('%.12f', rate) if rate.is_a?(Float) && rate < MINIMAL_EPSILON
       "#{rate} <span class=text-muted>#{currency}</span>".html_safe
     end
 
@@ -68,7 +70,7 @@ module Gera
     end
 
     # = '%.12f' % humanized_money rate.buy_money
-    def humanized_rate(rate, currency = nil)
+    def humanized_rate(rate, _currency = nil)
       rate = rate.to_f if rate.is_a? Gera::Rate
       if rate.is_a? Money
         raise 'Валюту отдавать запрещено, она округляет не удачно'
@@ -76,34 +78,34 @@ module Gera
         rate = rate.to_f
       end
       if rate < 1
-        rate1 = '%.3f' % (1.0 / rate)
+        rate1 = format('%.3f', (1.0 / rate))
         "<span class=text-muted>1/</span>#{rate1}".html_safe
       else
-        '%.3f' % rate
+        format('%.3f', rate)
         # = '%.12f' % humanized_money rate.buy_money
-        #humanized_money Money.from_amount(rate, currency)
+        # humanized_money Money.from_amount(rate, currency)
       end
     end
 
-    def humanized_rate_text(rate, currency = nil)
+    def humanized_rate_text(rate, _currency = nil)
       if rate < 1
-        rate1 = '%.3f' % (1.0 / rate)
+        rate1 = format('%.3f', (1.0 / rate))
         "1/#{rate1}".html_safe
       else
-        '%.3f' % rate
+        format('%.3f', rate)
       end
     end
 
     def rate_inversed(rate)
-      "<span class='text-muted'>(1/#{1.0/rate.to_f})</span>".html_safe
+      "<span class='text-muted'>(1/#{1.0 / rate.to_f})</span>".html_safe
     end
 
-    def humanized_rate_detailed(rate, separator=' ')
-      if rate < 1
-        buffer = "#{rate}#{separator}#{rate_inversed(rate)}".html_safe
-      else
-        buffer = rate
-      end
+    def humanized_rate_detailed(rate, separator = ' ')
+      buffer = if rate < 1
+                 "#{rate}#{separator}#{rate_inversed(rate)}".html_safe
+               else
+                 rate
+               end
       content_tag :span, buffer.to_s, class: 'text-nowrap'
     end
   end

@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 module Gera
   class CurrencyRateDecorator < ApplicationDecorator
     delegate :mode, :id, :external_rate_id, :meta, :rate_value
 
     def detailed
       buffer = []
-      if object.mode_cross?
-        buffer << 'cross'
-      else
-        buffer << object.rate_source.to_s # if object.rate_source.present?
-      end
+      buffer << if object.mode_cross?
+                  'cross'
+                else
+                  object.rate_source.to_s # if object.rate_source.present?
+                end
 
       buffer.join(' × ').html_safe
     end
@@ -17,17 +19,17 @@ module Gera
       return unless object.external_rate_id.present?
 
       er = object.external_rate
-      if [:exmo_sell].include? mode.to_sym
-        buffer = "#{h.humanized_rate_detailed er.sell_price} (из колонки 'продажа')"
-      elsif [:exmo_buy].include? mode.to_sym
-        buffer = "#{h.humanized_rate_detailed er.buy_price} (из колонки 'покупка')"
-      elsif [:cbr_min].include? mode.to_sym
-        buffer = "#{h.humanized_rate_detailed er.rate}<br/>(минимальный из пары #{object.meta.rates})"
-      elsif [:cbr_max].include? mode.to_sym
-        buffer = "#{h.humanized_rate_detailed er.rate}<br/>(максимальный из пары #{object.meta.rates})"
-      else
-        buffer = 'WTF?'
-      end
+      buffer = if [:exmo_sell].include? mode.to_sym
+                 "#{h.humanized_rate_detailed er.sell_price} (из колонки 'продажа')"
+               elsif [:exmo_buy].include? mode.to_sym
+                 "#{h.humanized_rate_detailed er.buy_price} (из колонки 'покупка')"
+               elsif [:cbr_min].include? mode.to_sym
+                 "#{h.humanized_rate_detailed er.rate}<br/>(минимальный из пары #{object.meta.rates})"
+               elsif [:cbr_max].include? mode.to_sym
+                 "#{h.humanized_rate_detailed er.rate}<br/>(максимальный из пары #{object.meta.rates})"
+               else
+                 'WTF?'
+               end
 
       buffer = buffer + ' от ' + I18n.l(er.created_at, format: :long)
 
@@ -38,7 +40,7 @@ module Gera
       buffer = []
       buffer << "Покупаем 1 #{object.cur_from} за #{object.rate_value} #{object.cur_to}"
       buffer << "Покупаем 1 #{object.currency_pair.first} за #{h.humanized_rate object.rate_value} #{object.currency_pair.second}".html_safe
-      buffer << "Продаем 1 #{object.cur_to} за #{1.0/object.rate_value} #{object.cur_from}"
+      buffer << "Продаем 1 #{object.cur_to} за #{1.0 / object.rate_value} #{object.cur_from}"
       buffer = buffer.join "\n"
       h.simple_format(buffer).html_safe
     end
@@ -94,15 +96,15 @@ module Gera
     end
 
     def comment_equal(_inverse)
-      "Одинаковый тип валюты"
+      'Одинаковый тип валюты'
     end
 
-    def comment_inderect(inverse)
+    def comment_inderect(_inverse)
       r1 = CurrencyRateDecorator.decorate object.rate1_currency_rate
       r2 = CurrencyRateDecorator.decorate object.rate2_currency_rate
-      "Через #{object.meta.inter_cur}\n" +
-        "Продажа:\n" +
-        "#{object.rate1_currency_rate.rate_money.format} за #{object.rate1_currency_rate.cur_from}\n(#{r1.comment})\n"+
+      "Через #{object.meta.inter_cur}\n" \
+        "Продажа:\n" \
+        "#{object.rate1_currency_rate.rate_money.format} за #{object.rate1_currency_rate.cur_from}\n(#{r1.comment})\n" \
         "#{object.rate2_currency_rate.rate_money.format} за #{object.rate2_currency_rate.cur_from}\n(#{r2.comment})"
     end
 
@@ -120,7 +122,7 @@ module Gera
       max_rate_d.comment inverse
     end
 
-    def comment_reverse(inverse)
+    def comment_reverse(_inverse)
       [
         "Инверсия (#{object.reverse_currency_rate.pair})",
         object.reverse_currency_rate.buy_rate,
@@ -135,11 +137,11 @@ module Gera
     end
 
     def source(currency_rate)
-      if currency_rate.mode_cross?
-        buffer = CurrencyRateDecorator.decorate(currency_rate).detailed
-      else
-        buffer = currency_rate.rate_source.presence || currency_rate.mode
-      end
+      buffer = if currency_rate.mode_cross?
+                 CurrencyRateDecorator.decorate(currency_rate).detailed
+               else
+                 currency_rate.rate_source.presence || currency_rate.mode
+               end
       "(#{buffer})".html_safe
     end
   end

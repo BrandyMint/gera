@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'application_controller'
 module Gera
   class DirectionRateHistoryIntervalsController < ApplicationController
@@ -39,23 +41,22 @@ module Gera
     end
 
     def intervals
-      scope = DirectionRateHistoryInterval.
-        where(payment_system_to_id: filter.payment_system_to_id, payment_system_from_id: filter.payment_system_from_id).
-        order(:interval_from)
+      scope = DirectionRateHistoryInterval
+              .where(payment_system_to_id: filter.payment_system_to_id, payment_system_from_id: filter.payment_system_from_id)
+              .order(:interval_from)
 
       case filter.value_type
       when 'rate'
-        scope.
-          pluck(:interval_from, :min_rate, :max_rate).
-          map { |time, min, max| [time.to_f * 1000, prepare_rate_value(min), prepare_rate_value(max), prepare_rate_value(min), prepare_rate_value(max)] }
+        scope
+          .pluck(:interval_from, :min_rate, :max_rate)
+          .map { |time, min, max| [time.to_f * 1000, prepare_rate_value(min), prepare_rate_value(max), prepare_rate_value(min), prepare_rate_value(max)] }
       when 'comission'
-        scope.
-          pluck(:interval_from, :min_comission, :max_comission).
-          map { |time, min, max| [time.to_f * 1000, min, max, min, max] }
+        scope
+          .pluck(:interval_from, :min_comission, :max_comission)
+          .map { |time, min, max| [time.to_f * 1000, min, max, min, max] }
       else
         raise "Unknown value_type #{filter.value_type}"
       end
-
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Gera
   class RateSource < ApplicationRecord
     include Authority::Abilities
@@ -37,7 +39,7 @@ module Gera
     end
 
     def self.get!
-      where(type: self.name).take!
+      where(type: name).take!
     end
 
     def find_rate_by_currency_pair!(pair)

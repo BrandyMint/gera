@@ -1,18 +1,20 @@
+# frozen_string_literal: true
+
 require_relative 'application_controller'
 module Gera
   class PaymentSystemsController < ApplicationController
     authorize_actions_for PaymentSystem
 
-    EDIT_COLUMNS = %i(
+    EDIT_COLUMNS = %i[
       name icon_url currency
       income_enabled outcome_enabled
-    )
+    ].freeze
 
-    SHOW_COLUMNS = %i(
+    SHOW_COLUMNS = %i[
       id icon name currency
       income_enabled outcome_enabled
       actions
-    )
+    ].freeze
 
     def index
       render locals: {
@@ -54,10 +56,10 @@ module Gera
     def update
       respond_to do |format|
         if payment_system.update_attributes permitter_params
-          format.html { redirect_to(payment_systems_path, :notice => 'Status was successfully updated.') }
+          format.html { redirect_to(payment_systems_path, notice: 'Status was successfully updated.') }
           format.json { respond_with_bip(payment_system) }
         else
-          format.html { render :action => "edit", locals: { payment_system: payment_system, columns: EDIT_COLUMNS } }
+          format.html { render action: 'edit', locals: { payment_system: payment_system, columns: EDIT_COLUMNS } }
           format.json { respond_with_bip(payment_system) }
         end
       end

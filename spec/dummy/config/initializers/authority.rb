@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'authority'
 Authority.configure do |config|
   # USER_METHOD
@@ -21,15 +23,15 @@ Authority.configure do |config|
   # Defaults are as follows:
   #
   config.controller_action_map = {
-    index:   'read',
-    show:    'read',
-    new:     'create',
-    create:  'create',
-    edit:    'update',
-    update:  'update',
+    index: 'read',
+    show: 'read',
+    new: 'create',
+    create: 'create',
+    edit: 'update',
+    update: 'update',
     destroy: 'delete',
-    accept:  'accept',
-    reject:  'reject',
+    accept: 'accept',
+    reject: 'reject'
   }
 
   # ABILITIES
@@ -41,13 +43,13 @@ Authority.configure do |config|
   # Defaults are as follows:
   #
   config.abilities = {
-    read:    'readable',
-    create:  'creatable',
-    update:  'updatable',
-    delete:  'deletable',
+    read: 'readable',
+    create: 'creatable',
+    update: 'updatable',
+    delete: 'deletable',
     destroy: 'deletable',
-    accept:  'acceptable',
-    reject:  'rejectable',
+    accept: 'acceptable',
+    reject: 'rejectable'
   }
 
   # LOGGER

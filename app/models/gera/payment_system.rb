@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Gera
   class PaymentSystem < ApplicationRecord
     include ::Archivable
@@ -7,11 +9,11 @@ module Gera
     self.table_name = :payment_systems
 
     scope :ordered, -> { order :priority }
-    scope :enabled,  -> { where 'income_enabled>0 or outcome_enabled>0' }
-    scope :disabled,  -> { where income_enabled: false, outcome_enabled: false }
+    scope :enabled, -> { where 'income_enabled>0 or outcome_enabled>0' }
+    scope :disabled, -> { where income_enabled: false, outcome_enabled: false }
 
-    enum total_computation_method: %i(regular_fee reverse_fee)
-    enum transfer_comission_payer: %i(user shop), _prefix: :transfer_comission_payer
+    enum total_computation_method: %i[regular_fee reverse_fee]
+    enum transfer_comission_payer: %i[user shop], _prefix: :transfer_comission_payer
 
     validates :name, presence: true, uniqueness: true
     validates :currency, presence: true
@@ -31,6 +33,7 @@ module Gera
 
     def currency
       return unless type_cy
+
       @currency ||= Money::Currency.find_by_local_id(type_cy) || raise("Не найдена валюта #{type_cy}")
     end
 
@@ -53,13 +56,13 @@ module Gera
 
     private
 
-    def calculate_total(money: , fee:)
+    def calculate_total(money:, fee:)
       if fee.computation_method == 'regular_fee'
         calculate_total_using_regular_comission(money, fee.amount)
       elsif fee.computation_method == 'reverse_fee'
         calculate_total_using_reverse_comission(money, fee.amount)
       else
-        raise NotImplementedError.new("Нет расчета для #{fee.computation_method}")
+        raise NotImplementedError, "Нет расчета для #{fee.computation_method}"
       end
     end
 

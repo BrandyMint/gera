@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 module Gera
   class PaymentSystemDecorator < ApplicationDecorator
     delegate_all
 
     def icon
       return unless object.icon.present?
+
       h.image_tag(object.icon_url, width: 32)
     end
 

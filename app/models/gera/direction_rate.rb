@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Gera
   # Конечный курс обмена по направлениями
   #
@@ -66,11 +68,13 @@ module Gera
 
     def in_money
       return 1 if rate_value < 1
+
       rate_value
     end
 
     def out_money
       return 1.0 / rate_value if rate_value < 1
+
       1
     end
 
@@ -100,15 +104,13 @@ module Gera
 
       diff = res.finite_rate.to_f.as_percentage_of(rate_value.to_f) - 100
 
-      if diff.abs > 0
-        logger.warn "direction_rate_id=#{id} Расчитанная конечная ставка (#{res.finite_rate}) не соответсвует текущей (#{rate_value}). Разница #{diff}"
-      end
+      logger.warn "direction_rate_id=#{id} Расчитанная конечная ставка (#{res.finite_rate}) не соответсвует текущей (#{rate_value}). Разница #{diff}" if diff.abs > 0
 
       res
     end
 
     def dump
-      as_json(only: %i(id ps_from_id ps_to_id currency_rate_id rate_value base_rate_value rate_percent created_at))
+      as_json(only: %i[id ps_from_id ps_to_id currency_rate_id rate_value base_rate_value rate_percent created_at])
         .merge currency_rate: currency_rate.dump, dump_version: 1
     end
 
@@ -117,14 +119,14 @@ module Gera
         income_payment_system_id: income_payment_system_id,
         outcome_payment_system_id: outcome_payment_system_id
       ) ||
-      ExchangeNotification.find_by(
-        income_payment_system_id: income_payment_system_id,
-        outcome_payment_system_id: nil
-      ) ||
-      ExchangeNotification.find_by(
-        income_payment_system_id: nil,
-        outcome_payment_system_id: outcome_payment_system_id
-      )
+        ExchangeNotification.find_by(
+          income_payment_system_id: income_payment_system_id,
+          outcome_payment_system_id: nil
+        ) ||
+        ExchangeNotification.find_by(
+          income_payment_system_id: nil,
+          outcome_payment_system_id: outcome_payment_system_id
+        )
     end
 
     private
@@ -136,6 +138,7 @@ module Gera
     def calculate_rate
       self.base_rate_value = currency_rate.rate_value
       raise UnknownExchangeRate, "Нет exchange_rate для #{ps_from}->#{ps_to}" unless exchange_rate
+
       self.rate_percent = exchange_rate.comission_percents
       self.rate_value = calculate_finite_rate base_rate_value, rate_percent unless rate_percent.nil?
     end

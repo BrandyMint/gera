@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'application_controller'
 
 module Gera
@@ -5,7 +7,7 @@ module Gera
     authorize_actions_for DirectionRate
     authority_actions last: :read
 
-    # TODO передавать параметром в show
+    # TODO: передавать параметром в show
     def last
       exchange_rate = direction_rate.exchange_rate
       dr = Universe.direction_rates_repository.find_direction_rate_by_exchange_rate_id exchange_rate.id

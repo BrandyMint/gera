@@ -7,8 +7,9 @@ html
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload'
   body
     = render 'header'
-    .container-wide.container-margin-bottom style='margin-top: 80px'
-      = render 'flashes'
-      = render 'breadcrumbs'
 
+    .container-fluid.container-margin-bottom style='margin-top: 80px'
+      - if breadcrumbs.nil?
+        ol.breadcrumb= render_breadcrumbs tag: :li, separator: '', class: '', item_class: '', divider_class: '', active_class: 'active'
       = yield
+    = noty_flashes

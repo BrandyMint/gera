@@ -1,6 +1,5 @@
 .container-fluid
-  = render 'rates_menu' do
-    = "Курс актуален на #{l created_at, format: :long}"
+  = "Курс актуален на #{l created_at, format: :long}"
   .row
     .col-md-12
       .text-small= render layout: 'currencies_table' do |pair|
@@ -15,6 +14,7 @@
         - else
           td.text-nowrap.text-right.v-middle data-toggle=:tooltip data-container=:body data-html='true' title='курс отсутсвует'
             .text-muted &middot;
+
 
 
   .panel.panel-default.m-t-md

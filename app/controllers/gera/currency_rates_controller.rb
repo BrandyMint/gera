@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'application_controller'
 require 'csv'
 module Gera
@@ -19,7 +21,7 @@ module Gera
     end
 
     def show
-      # TODO удалить
+      # TODO: удалить
       # ActiveRecord::Base.default_timezone = :utc
       render locals: {
         currency_rate: currency_rate,
@@ -45,7 +47,7 @@ module Gera
 
       respond_to do |format|
         format.html { raise 'Поддерживается только CSV' }
-        format.csv { send_data body, filename: "exchange_rates-modes-#{Date.today}.csv"}
+        format.csv { send_data body, filename: "exchange_rates-modes-#{Date.today}.csv" }
       end
     end
 
