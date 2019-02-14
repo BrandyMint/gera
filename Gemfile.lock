@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    gera (0.1.0)
+    gera (0.2.0)
       authority
       auto_logger (~> 0.1.4)
       business_time
