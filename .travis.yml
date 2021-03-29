@@ -7,8 +7,8 @@ env:
 script:
   - RAILS_ENV=test bundle exec rake --trace db:migrate spec
 before_script:
-  - test "$DB" = "mysql" && mysql -e 'create database gera_test'
-  - test "$DB" = "postgresql" && psql -c 'create database gera_test' -U postgres
+  - test "$DB" = "mysql" && mysql -e 'create database gera_test' || echo skip
+  - test "$DB" = "postgresql" && psql -c 'create database gera_test' -U postgres || echo skip
 services:
   - mysql
   - postgresql
