@@ -1,6 +1,5 @@
 language: ruby
-rvm:
-  - 2.6.6
+cache: bundler
 env:
   - DB=mysql
   - DB=postgresql
