@@ -33,6 +33,7 @@ end
 
 load 'lib/tasks/auto_generate_diagram.rake'
 
+require "yard"
 if defined? YARD
   YARD::Rake::YardocTask.new do |t|
     t.files   = ['lib/**/*.rb', 'app/**/*.rb']  # optional
