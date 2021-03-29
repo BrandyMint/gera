@@ -2,15 +2,17 @@ language: ruby
 rvm:
   - 2.6.6
 env:
+  - DB=mysql
   - DB=postgresql
 script:
   - RAILS_ENV=test bundle exec rake --trace spec
 before_script:
   - cat ~travis/.my.cnf
-  - test "$DB" = "mysql" && mysql -e 'create database gera_test' || echo skip
-  - test "$DB" = "postgresql" && psql -c 'create database gera_test' -U postgres || echo skip
+  - sh -c "if [ '$DB' = 'mysql' ]; then mysql -e 'create database gera_test'; fi"
+  - sh -c "if [ '$DB' = 'postgres' ]; then psql -c 'create database gera_test' -U postgres; fi"
   - RAILS_ENV=test bundle exec rake --trace db:migrate 
 services:
   - postgresql
+  - mysql
 dist: xenial
 sudo: required
