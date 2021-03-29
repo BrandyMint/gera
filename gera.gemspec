@@ -46,7 +46,6 @@ Gem::Specification.new do |s|
     s.add_development_dependency 'guard-ctags-bundler'
     s.add_development_dependency 'guard-rspec'
     s.add_development_dependency 'guard-rubocop'
-    s.add_development_dependency 'byebug'
     s.add_development_dependency 'pry'
     s.add_development_dependency 'pry-doc'
     s.add_development_dependency 'pry-rails'
