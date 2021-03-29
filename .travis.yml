@@ -13,5 +13,5 @@ before_script:
 services:
   - mysql
   - postgresql
-dist: trusty
+dist: xenial
 sudo: required
