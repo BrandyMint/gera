@@ -43,7 +43,6 @@ Gem::Specification.new do |s|
     s.add_development_dependency 'rubocop'
     s.add_development_dependency 'rubocop-rspec'
     s.add_development_dependency 'guard-bundler'
-    s.add_development_dependency 'guard-ctags-bundler'
     s.add_development_dependency 'guard-rspec'
     s.add_development_dependency 'guard-rubocop'
     s.add_development_dependency 'pry'
