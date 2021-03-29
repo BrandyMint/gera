@@ -16,7 +16,7 @@ module Gera
       VCR.use_cassette :exmo do
         expect(EXMORatesWorker.new.perform).to be_truthy
       end
-      expect(CurrencyRate.count).to eq 134
+      expect(CurrencyRate.count).to eq 170
     end
   end
 end
