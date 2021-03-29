@@ -2,22 +2,15 @@ language: ruby
 rvm:
   - 2.6.6
 env:
-  - DB=mysql
   - DB=postgresql
 script:
   - RAILS_ENV=test bundle exec rake --trace spec
 before_script:
+  - cat ~travis/.my.cnf
   - test "$DB" = "mysql" && mysql -e 'create database gera_test' || echo skip
   - test "$DB" = "postgresql" && psql -c 'create database gera_test' -U postgres || echo skip
   - RAILS_ENV=test bundle exec rake --trace db:migrate 
 services:
-  - mysql
   - postgresql
-addons:
-  apt:
-    sources:
-      - mysql-5.7-trusty
-    packages:
-      - mysql-server
 dist: xenial
 sudo: required
