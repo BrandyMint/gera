@@ -29,17 +29,25 @@ module Gera
     alias_attribute :archived_at, :deleted_at
     alias_attribute :enable_income, :income_enabled
     alias_attribute :enable_outcome, :outcome_enabled
+    alias_attribute :currency_id, :type_cy
 
-    # TODO: rename type_cy to currency
     def currency
-      return unless type_cy
+      return unless currency_id
 
-      @currency ||= Money::Currency.find_by_local_id(type_cy) || raise("Не найдена валюта #{type_cy}")
+      Money::Currency.find_by_local_id(currency_id) || raise("No currency found #{currency_id}")
     end
 
-    def currency=(cur)
-      cur = Money::Currency.find cur unless cur.is_a? Money::Currency
-      self.type_cy = cur.is_a?(Money::Currency) ? cur.local_id : nil
+    def currency=(value)
+      if value.blank?
+        self.currency_id = nil
+      elsif value.is_a? Money::Currency
+        self.currency_id = value.local_id
+      elsif value.to_s.to_i.to_s == value.to_s # local_id
+        self.currency_id = (Money::Currency.find_by_local_id(value) || raise("No currency found #{value}")).local_id
+      else
+        self.currency_id = (Money::Currency.find(value) || raise("No currency found #{value}")).local_id
+      end
+      self.currency
     end
 
     def to_s

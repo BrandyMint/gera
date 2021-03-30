@@ -9,5 +9,25 @@ module Gera
     end
     subject { create :gera_payment_system }
     it { expect(subject).to be_persisted }
+
+    context '#currency=' do
+      let(:payment_system) { create :gera_payment_system }
+
+      let(:usd) { Money::Currency.find :usd }
+      it 'receive Money::Currency' do
+        payment_system.update currency: usd
+        expect(payment_system.currency).to eq usd
+      end
+
+      it 'receive local_id' do
+        payment_system.update currency: usd.local_id
+        expect(payment_system.currency).to eq usd
+      end
+
+      it 'receive iso_code' do
+        payment_system.update currency: usd.iso_code
+        expect(payment_system.currency).to eq usd
+      end
+    end
   end
 end
