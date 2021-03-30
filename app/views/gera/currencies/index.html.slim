@@ -1,6 +1,6 @@
 h1 Валюта
 
-table.table.table-narrow.table-striped.table-condensed
+table.table.table-narrow.table-striped.table-condensed.table-bordered
   thead.bg-white
     tr
       th Валюта
@@ -18,3 +18,4 @@ table.table.table-narrow.table-striped.table-condensed
       td= c.minimal_input_value.format
       td= c.minimal_output_value.format
       td= c.decimal_places
+      td= c.authorized_round
