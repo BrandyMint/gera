@@ -45,9 +45,14 @@ module Gera
       elsif value.to_s.to_i.to_s == value.to_s # local_id
         self.currency_id = (Money::Currency.find_by_local_id(value) || raise("No currency found #{value}")).local_id
       else
-        self.currency_id = (Money::Currency.find(value) || raise("No currency found #{value}")).local_id
+        self.currency_iso_code = value
       end
       self.currency
+    end
+
+    def currency_iso_code=(value)
+      self.currency_id = (Money::Currency.find(value) || raise("No currency found #{value}")).local_id
+      currency_iso_code
     end
 
     def to_s
