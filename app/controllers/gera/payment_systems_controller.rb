@@ -38,7 +38,7 @@ module Gera
     end
 
     def create
-      PaymentSystem.create! permitter_params
+      PaymentSystem.create! permitted_params
     rescue ActiveRecord::RecordInvalid => e
       render :new, locals: {
         payment_system: e.record,
@@ -55,7 +55,7 @@ module Gera
 
     def update
       respond_to do |format|
-        if payment_system.update_attributes permitter_params
+        if payment_system.update_attributes permitted_params
           format.html { redirect_to(payment_systems_path, notice: 'Status was successfully updated.') }
           format.json { respond_with_bip(payment_system) }
         else
@@ -71,7 +71,7 @@ module Gera
       @payment_system ||= PaymentSystem.find params[:id]
     end
 
-    def permitter_params
+    def permitted_params
       params[:payment_system].permit!
     end
   end
