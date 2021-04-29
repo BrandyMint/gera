@@ -1,0 +1,10 @@
+table
+  tbody
+    - currencies.each do |currency|
+      tr
+        td.m-t-md colspan=2
+          b= currency.iso_code
+      = render 'currency_rate', currency: currency, another: RUB
+      = render 'currency_rate', currency: currency, another: USD unless currency == KZT
+      td
+        td.text-small colspan=2 &nbsp;

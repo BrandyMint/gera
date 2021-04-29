@@ -1,0 +1,32 @@
+.container-fluid
+  .exchange-rates-header
+    // Минимальная расчетная ширина 950 (Ксения)
+    // Потому что операторы имеют экран на 2000 пикселей и делят его пополам
+    .container-fluid style='min-width: 1200px'
+      .row
+        .col-xs-3
+          /div style='margin-top: 65px'
+            /= render 'payment_systems_filter', exchange_rate: exchange_rate
+
+        .col-xs-6
+          -# = render 'bestchange_widget', exchange_rate_id: exchange_rate.id
+        .col-xs-3
+          - # Отключил, потому что направление меняется динамически, а ссылка не меняется
+          - if false
+            .m-b-md= link_to exchange_rate.bestchange_url, target: '_blank' do
+              span.m-r-xs на bestchange&nbsp;
+              = ion_icon 'share'
+
+          div[data-currency-rates-update-url='currency_rates_operator_exchange_rates_url'; style='min-width: 300px']
+            = render 'currency_rates'
+
+          /= link_to 'Базовые курсы подробнее &rarr;'.html_safe, operator_currency_rates_path
+
+  .exchange-rates-body
+    .container-scrollable
+      .table-exchange-rates-sticky-container data={ 'exchange-rates-update-url' => 'operator_exchange_rate_url(exchange_rate)' }
+        = render 'exchange_rates', exchange_rate: exchange_rate, payment_systems: payment_systems, filtered_payment_systems: payment_systems
+      javascript:
+        document.addEventListener("turbolinks:load", function() {
+          window.reselectExchangeRate(#{exchange_rate.id});
+        });

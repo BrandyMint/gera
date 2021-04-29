@@ -1,0 +1,9 @@
+.row
+  - currencies = Gera.brief_currencies.in_groups 2
+  .col-md-6
+    = render 'currency_rates_table', currencies: currencies.first
+  .col-md-6
+    = render 'currency_rates_table', currencies: currencies.second
+
+p.text-small.text-muted 
+  i На #{l Time.zone.now, format: :short}

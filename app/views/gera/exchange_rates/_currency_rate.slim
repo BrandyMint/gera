@@ -1,0 +1,11 @@
+- unless another == currency
+  tr.text-small
+    td.text-muted
+      .p-r-md Покупка
+    td.text-right.text-nowrap
+      = smart_currency_rate currency, another, reverse: currency != KZT
+  tr.text-small
+    td.text-muted
+      .p-r-md Продажа
+    td.text-right.text-nowrap
+      = smart_currency_rate another, currency, reverse: currency == KZT

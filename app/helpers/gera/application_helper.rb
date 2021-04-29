@@ -106,5 +106,14 @@ module Gera
                end
       content_tag :span, buffer.to_s, class: 'text-nowrap'
     end
+
+    def smart_currency_rate(cur_from, cur_to, reverse: false)
+      method = reverse ? :rate_money : :reverse_rate_money
+      pair = Gera::CurrencyPair.new cur_from, cur_to
+      rate = Gera::Universe.currency_rates_repository.find_currency_rate_by_pair pair
+      link_to gera.currency_rate_path(rate), target: '_blank' do
+        humanized_money_with_currency rate.send(method)
+      end
+    end
   end
 end

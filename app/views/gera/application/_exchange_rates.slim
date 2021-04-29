@@ -1,0 +1,31 @@
+table.table-condensed.table-comission.table-bordered.table-exchange-rates.table-cross
+  thead.bg-white
+    tr
+      th
+        span.table-spinner
+          .table-spinner-icon
+            span.table-update-info title="Период обновления таблицы"
+      - filtered_payment_systems.each do |ps_to|
+        th title="(#{ps_to.id}) #{ps_to.name}" data={payment_system_to_id: ps_to.id}
+          = ps_icon ps_to, size: 16
+  tbody
+    - payment_systems.each do |ps_from|
+      tr
+        th title="(#{ps_from.id}) #{ps_from.name}" data={ payment_system_from_id: ps_from.id }
+          = ps_icon ps_from, size: 16
+        - filtered_payment_systems.each do |ps_to|
+          - direction = Gera::Direction.new(ps_from: ps_from, ps_to: ps_to).freeze
+          - er = Gera::Universe.exchange_rates_repository.find_by_direction direction
+          - if er.present?
+            td.text-center data={ controll_exchange_rate_id: er.id, payment_system_from_id: ps_from.id, payment_system_to_id: ps_to.id }
+              .exchange-rates-cell-container
+                - if er.is_enabled?
+                  - if er.comission >0
+                    .text-success= humanized_comission er.comission
+                  - else
+                    .text-danger= humanized_comission er.comission
+                - else
+                  .text-muted= ion_icon 'ios-close-empty'
+          - else
+            td.text-center data={ payment_system_from_id: ps_from.id, payment_system_to_id: ps_to.id }
+              .text-muted= middot

@@ -40,6 +40,14 @@ module Gera
       end
       h
     end
+
+    # @param [Array] Список валют для быстрого аналига в таблице курсов
+    mattr_accessor :brief_currencies
+    @@brief_currencies =  %i[USD BTC LTC KZT ETC DSH]
+
+    def brief_currencies
+      @@brief_currencies.map { |k| Money::Currency.find! k }
+    end
 	end
 end
 
