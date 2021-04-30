@@ -17,14 +17,14 @@ Gem::Specification.new do |s|
     s.files = Dir["{app,config,db,lib}/**/*", "LICENSE", "Rakefile", "README.md"]
 
     s.add_dependency 'simple_form'
-    s.add_dependency "rails", "~> 5.2.1"
+    s.add_dependency "rails", "> 5.2.0"
     s.add_dependency 'best_in_place'
     s.add_dependency 'virtus'
     s.add_dependency 'kaminari'
     s.add_dependency 'require_all'
     s.add_dependency 'rest-client', '~> 2.0'
     s.add_dependency 'sidekiq'
-    s.add_dependency 'auto_logger', '~> 0.1.4'
+    s.add_dependency 'auto_logger', '> 0.1.4'
     s.add_dependency 'request_store'
     s.add_dependency 'business_time'
     s.add_dependency 'dapi-archivable'
@@ -33,7 +33,7 @@ Gem::Specification.new do |s|
     s.add_dependency 'money'
     s.add_dependency 'money-rails'
     s.add_dependency 'percentable'
-    s.add_dependency 'draper', '~> 3.0.1'
+    s.add_dependency 'draper', '> 3.0.0'
     s.add_dependency 'active_link_to'
     s.add_dependency 'breadcrumbs_on_rails'
     s.add_dependency 'noty_flash'
