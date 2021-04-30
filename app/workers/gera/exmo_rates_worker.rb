@@ -52,7 +52,7 @@ module Gera
     end
 
     def load_rates
-      result = JSON.parse open(URI.parse(URL)).read
+      result = JSON.parse URI.parse(URL).read
       raise Error, 'Result is not a hash' unless result.is_a? Hash
       raise Error, result['error'] if result['error'].present?
 

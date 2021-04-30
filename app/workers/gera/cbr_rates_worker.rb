@@ -155,7 +155,7 @@ module Gera
 
       logger.info "fetch rates for #{date} from #{uri}"
 
-      doc = Nokogiri::XML open uri
+      doc = Nokogiri::XML uri.read
       root = doc.xpath('/ValCurs')
 
       root_date = root.attr('Date').text
