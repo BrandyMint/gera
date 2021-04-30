@@ -30,6 +30,10 @@ Or install it yourself as:
 $ gem install gera
 ```
 
+```
+rake gera:install:migrations
+```
+
 ## Configuration
 
 Add `./config/initializers/gera.rb` with this content:
