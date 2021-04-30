@@ -1,4 +1,7 @@
-# desc "Explaining what the task does"
-# task :gera do
-#   # Task goes here
-# end
+desc "Explaining what the task does"
+task :namespace do
+
+  desc "Update dates"
+  task :update_rates do
+  end
+end

@@ -65,7 +65,7 @@ module Gera
     def save_snapshot_rate(cur_from, cur_to)
       pair = CurrencyPair.new cur_from, cur_to
 
-      min_rate, max_rate = CbrExternalRate
+      min_rate, max_rate = CBRExternalRate
                            .where(cur_from: cur_from.iso_code, cur_to: cur_to.iso_code)
                            .order('date asc')
                            .last(2)
@@ -140,12 +140,12 @@ module Gera
     end
 
     def fetch_rates(date)
-      return if CbrExternalRate.where(date: date, cur_from: currencies.map(&:iso_code)).count == currencies.count
+      return if CBRExternalRate.where(date: date, cur_from: currencies.map(&:iso_code)).count == currencies.count
 
       root = build_root date
 
       currencies.each do |cur|
-        save_rate get_rate(root, CBR_IDS[cur.iso_code]), cur, date unless CbrExternalRate.where(date: date, cur_from: cur.iso_code).exists?
+        save_rate get_rate(root, CBR_IDS[cur.iso_code]), cur, date unless CBRExternalRate.where(date: date, cur_from: cur.iso_code).exists?
       end
     end
 
@@ -179,7 +179,7 @@ module Gera
 
       rate = (original_rate / nominal).round(ROUND)
 
-      CbrExternalRate.create!(
+      CBRExternalRate.create!(
         cur_from: cur.iso_code,
         cur_to: RUB.iso_code,
         rate: rate,

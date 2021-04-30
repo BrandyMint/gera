@@ -9,9 +9,7 @@
 require 'benchmark'
 
 module Gera
-  # TODO: Скорее всего перенести в Gera под именем ExportToBestChangeWorker
-  #
-  class DumpValutaWorker
+  class ExportToBestchangeWorker
     include Sidekiq::Worker
     include AutoLogger
 
