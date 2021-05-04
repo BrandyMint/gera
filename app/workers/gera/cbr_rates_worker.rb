@@ -11,6 +11,8 @@ module Gera
     include Sidekiq::Worker
     include AutoLogger
 
+    RAISE_ON_WRONG_DATE = Rails.env.production?
+
     CURRENCIES = %w[USD KZT EUR UAH].freeze
 
     CBR_IDS = {
@@ -161,9 +163,8 @@ module Gera
       root_date = root.attr('Date').text
       validate_date = date.strftime('%d.%m.%Y')
 
-      return root if validate_date == root_date
-
-      raise WrongDate, "Request and response dates are different #{uri}: #{validate_date} <> #{root_date}"
+      raise WrongDate, "Request and response dates are different #{uri}: #{validate_date} <> #{root_date}" if validate_date != root_date && RAISE_ON_WRONG_DATE
+      root
     end
 
     def get_rate(root, id)
