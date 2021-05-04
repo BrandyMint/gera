@@ -37,7 +37,7 @@ module Gera
 
     def intervals
       scope = Gera::CurrencyRateHistoryInterval
-              .where(cur_to_id: filter.currency_to.local_id, cur_from_id: filter.currency_from.local_id)
+              .where(cur_to_iso_code: filter.currency_to.iso_code, cur_from_iso_code: filter.currency_from.iso_code)
               .order(:interval_from)
 
       case filter.value_type

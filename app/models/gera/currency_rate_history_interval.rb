@@ -14,8 +14,8 @@ module Gera
         next if cur_from == cur_to
 
         create!(
-          cur_from_id: Money::Currency.find(cur_from).local_id,
-          cur_to_id: Money::Currency.find(cur_to).local_id,
+          cur_from_iso_code: Money::Currency.find(cur_from).iso_code,
+          cur_to_iso_code: Money::Currency.find(cur_to).iso_code,
           min_rate: min_rate, max_rate: max_rate,
           interval_from: interval_from, interval_to: interval_to
         )

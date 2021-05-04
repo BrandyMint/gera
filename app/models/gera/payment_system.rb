@@ -24,35 +24,27 @@ module Gera
 
     after_create :create_exchange_rates
 
-    delegate :iso_code, to: :currency, prefix: true, allow_nil: true
-
     alias_attribute :archived_at, :deleted_at
     alias_attribute :enable_income, :income_enabled
     alias_attribute :enable_outcome, :outcome_enabled
-    alias_attribute :currency_id, :type_cy
 
     def currency
-      return unless currency_id
+      return unless currency_iso_code
 
-      Money::Currency.find_by_local_id(currency_id) || raise("No currency found #{currency_id}")
+      Money::Currency.find(currency_iso_code) || raise("No currency found #{currency_iso_code}")
     end
 
     def currency=(value)
       if value.blank?
-        self.currency_id = nil
+        self.currency_iso_code = nil
       elsif value.is_a? Money::Currency
-        self.currency_id = value.local_id
-      elsif value.to_s.to_i.to_s == value.to_s # local_id
-        self.currency_id = (Money::Currency.find_by_local_id(value) || raise("No currency found #{value}")).local_id
+        self.currency_iso_code = value.iso_code
+      elsif value.is_a? String
+        self.currency_iso_code = (Money::Currency.find(value) || raise("No currency found #{value}")).iso_code
       else
-        self.currency_iso_code = value
+        raise "Unknown currency value type #{value.class}"
       end
       self.currency
-    end
-
-    def currency_iso_code=(value)
-      self.currency_id = (Money::Currency.find(value) || raise("No currency found #{value}")).local_id
-      currency_iso_code
     end
 
     def to_s
