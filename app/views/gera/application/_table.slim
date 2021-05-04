@@ -19,7 +19,7 @@
           tr class=decorated.try(:row_class)
             - columns.each do |column|
               td class=(decorated.try(:column_class, column) || 'text-nowrap')
-                - if allow_edit && allow_edit_column?(record, column)
+                - if record.respond_to?(column.to_s + '=') && allow_edit && allow_edit_column?(record, column)
                   - value = record.send column
                   = smart_best_in_place [parent, decorated].compact, column, value
                 - else
