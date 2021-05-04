@@ -26,7 +26,7 @@ module Gera
     end
 
     def create_rate(pair)
-      er = RateSource.cbr.find_rate_by_currency_pair pair
+      er = RateSourceCBR.enabled.take.find_rate_by_currency_pair pair
 
       price = (er.sell_price + er.buy_price) / 2.0
 
