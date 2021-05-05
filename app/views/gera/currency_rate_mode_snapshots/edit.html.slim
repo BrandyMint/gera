@@ -17,8 +17,10 @@
           = link_to 'Активировать', activate_currency_rate_mode_snapshot_path(snapshot), method: :post, class: 'btn btn-primary'
 
     ul.nav.nav-tabs
-      = active_link_to 'Режимы', url_for(view_mode: :methods), wrap_tag: :li, active: view_mode == :methods
-      = active_link_to 'Расчеты', url_for(view_mode: :calculations), wrap_tag: :li, active: view_mode == :calculations
+      li.nav-item
+        = link_to 'Режимы', url_for(view_mode: :methods),  class: active_class('nav-link', view_mode == :methods) 
+      li.nav-item
+        = link_to 'Расчеты', url_for(view_mode: :calculations), class: active_class('nav-link', view_mode == :calculations)
 
     = render 'snapshot', snapshot: snapshot
   .col-md-2
