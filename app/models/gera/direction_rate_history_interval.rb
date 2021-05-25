@@ -13,6 +13,7 @@ module Gera
     def self.create_by_interval!(interval_from, interval_to = nil)
       interval_to ||= interval_from + INTERVAL
       DirectionRate
+        .unscoped
         .where('created_at >= ? and created_at < ?', interval_from, interval_to)
         .group(:ps_from_id, :ps_to_id)
         .pluck(:ps_from_id, :ps_to_id, 'min(rate_value)', 'max(rate_value)', 'min(rate_percent)', 'max(rate_percent)')

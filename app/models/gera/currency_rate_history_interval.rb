@@ -6,6 +6,7 @@ module Gera
     def self.create_by_interval!(interval_from, interval_to = nil)
       interval_to ||= interval_from + INTERVAL
       CurrencyRate
+        .unscoped
         .where('created_at >= ? and created_at < ?', interval_from, interval_to)
         .group(:cur_from, :cur_to)
         .pluck(:cur_from, :cur_to, 'min(rate_value)', 'max(rate_value)')

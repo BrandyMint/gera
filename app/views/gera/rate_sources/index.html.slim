@@ -1,6 +1,8 @@
-.pull-right
-  ul.nav
-    li= link_to 'Базовый курс', currency_rates_path
+.float-right
+  = link_to 'Базовые курсы'.html_safe, currency_rates_path
 
+h1 Источники курсов
 - Gera::RateSource.ordered.each do |source|
-  = render 'rate_source', source: source
+  .mb-4
+    = render 'rate_source', source: source
+    hr

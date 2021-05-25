@@ -1,10 +1,11 @@
 h4
   = source
-  span.m-l-md.text-small.text-muted= link_to 'Журнал курсов', external_rate_snapshots_path(rate_source_id: source.id)
 
 - snapshot = source.actual_snapshot
 
-p Дата создания #{l source.updated_at, format: :long}
+.mb-3
+  | Дата создания #{l source.updated_at, format: :long}
+  span.ml-2.text-small.text-muted= link_to 'Журнал курсов', external_rate_snapshots_path(rate_source_id: source.id)
 
 - if snapshot.present?
   -# = render 'list', external_rates: snapshot.external_rates

@@ -25,7 +25,7 @@ module Gera
 
       DirectionsRatesWorker.perform_async
 
-      true
+      snapshot
     end
 
     private
@@ -50,9 +50,9 @@ module Gera
       cr.snapshot = snapshot
       cr.save!
     rescue StandardError => err
+      logger.error err
       raise err if !err.is_a?(Error) && Rails.env.test?
 
-      logger.error err
       Rails.logger.error err if Rails.env.development?
       if defined? Bugsnag
         Bugsnag.notify err do |b|

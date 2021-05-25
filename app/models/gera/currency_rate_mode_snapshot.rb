@@ -9,6 +9,7 @@ module Gera
     enum status: %i[draft active deactive], _prefix: true
 
     accepts_nested_attributes_for :currency_rate_modes
+    default_scope { order(created_at: :asc) }
 
     before_validation do
       self.title = Time.zone.now.to_s if title.blank?
