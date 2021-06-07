@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_15_132137) do
+ActiveRecord::Schema.define(version: 2021_06_07_065841) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -185,7 +185,7 @@ ActiveRecord::Schema.define(version: 2019_03_15_132137) do
     t.string "currency_iso_code", null: false
     t.boolean "income_enabled", default: false, null: false
     t.boolean "outcome_enabled", default: false, null: false
-    t.datetime "deleted_at"
+    t.datetime "archived_at"
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.boolean "is_available", default: true, null: false

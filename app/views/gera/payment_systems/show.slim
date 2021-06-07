@@ -1,1 +1,3 @@
+.mb-4
+  = link_to t('.payment_systems').html_safe, gera.payment_systems_path
 = render 'attributes_table', object: Gera.payment_system_decorator.decorate(payment_system), columns: columns

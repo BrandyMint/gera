@@ -24,9 +24,11 @@ module Gera
 
     after_create :create_exchange_rates
 
-    alias_attribute :archived_at, :deleted_at
+    alias_attribute :deleted_at, :archived_at
     alias_attribute :enable_income, :income_enabled
     alias_attribute :enable_outcome, :outcome_enabled
+
+    delegate :is_crypto?, to: :currency
 
     def currency
       return unless currency_iso_code
