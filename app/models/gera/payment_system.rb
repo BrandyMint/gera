@@ -7,7 +7,7 @@ module Gera
     include Authority::Abilities
 
     scope :ordered, -> { order :priority }
-    scope :enabled, -> { where 'income_enabled>0 or outcome_enabled>0' }
+    scope :enabled, -> { where 'income_enabled or outcome_enabled' }
     scope :disabled, -> { where income_enabled: false, outcome_enabled: false }
     scope :available, -> { where is_available: true }
 
@@ -29,6 +29,15 @@ module Gera
     alias_attribute :enable_outcome, :outcome_enabled
 
     delegate :is_crypto?, to: :currency
+
+    monetize :minimal_income_amount_cents, as: :minimal_income_amount, allow_nil: false, with_model_currency: :currency_iso_code
+    monetize :maximal_income_amount_cents, as: :maximal_income_amount, allow_nil: true, with_model_currency: :currency_iso_code
+    monetize :minimal_outcome_amount_cents, as: :minimal_outcome_amount, allow_nil: true, with_model_currency: :currency_iso_code
+    monetize :maximal_outcome_amount_cents, as: :maximal_outcome_amount, allow_nil: true, with_model_currency: :currency_iso_code
+
+    before_update if: :currency_iso_code_changed? do
+      raise "Changing currency is disabled"
+    end
 
     def currency
       return unless currency_iso_code

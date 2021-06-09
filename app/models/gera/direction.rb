@@ -16,6 +16,7 @@ module Gera
 
     delegate :id, to: :ps_to, prefix: true
     delegate :id, to: :ps_from, prefix: true
+    delegate :minimal_income_amount, to: :direction_rate, allow_nil: true
 
     def currency_from
       payment_system_from.currency

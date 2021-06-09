@@ -11,6 +11,7 @@ module Gera
     ensure_authorization_performed
 
     helper_method :payment_systems
+    helper_method :currencies
     helper_method :query_params
 
     private
@@ -23,8 +24,16 @@ module Gera
       "GERA #{VERSION}"
     end
 
+    def currencies
+      if defined? Currency
+        Currency.alive.map &:money_currency
+      else
+        Money::Currency.all
+      end
+    end
+
     def payment_systems
-      @payment_systems ||= Universe.payment_systems.available
+      @payment_systems ||= Universe.payment_systems.available.alive
     end
   end
 end

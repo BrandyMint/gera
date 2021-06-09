@@ -4,6 +4,14 @@ module Gera
   module ApplicationHelper
     MINIMAL_EPSILON = 0.001
 
+    def humanized_comission(comission)
+      buffer = format('%.3f', comission)
+
+      # Убираем нули в конце drop_trailing_zeros
+      buffer.gsub(/([.,]\d*)0+$/, '\1')
+            .gsub(/[.,]$/, '')
+    end
+
     def humanized_currency_rate(rate_value, pair, currency)
       rate = if rate_value < 1
                format('%.9f', rate_value.to_f)

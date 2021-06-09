@@ -74,10 +74,10 @@ module Gera
       direction_rate = Gera::Universe.direction_rates_repository.find_direction_rate_by_exchange_rate_id(exchange_rate.id)
       xml.item do
         # код валюты, которую обменный пункт принимает от клиента. Коды электронных валют приведены в списке ниже;
-        xml.from exchange_rate.payment_system_from.bestchange_letter_cod
+        xml.from exchange_rate.payment_system_from.bestchange_key
 
         #  код валюты, которую обменный пункт отправляет клиенту. Коды электронных валют приведены в списке ниже;
-        xml.to exchange_rate.payment_system_to.bestchange_letter_cod
+        xml.to exchange_rate.payment_system_to.bestchange_key
 
         # сколько валюты from должен отдать клиент;
         xml.in  direction_rate.out_money
