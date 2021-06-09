@@ -1,6 +1,6 @@
 - object = Gera::DirectionRateDecorator.decorate (direction_rate)
 
 h2= t 'direction_rate', id: direction_rate.id
-- columns = %i(direction inverse_direction created_at base_rate_value rate_percent ps_comission rate_value)
+- columns = %i(created_at direction rate_value inverse_direction base_rate_value rate_percent ps_comission)
 
 = render 'attributes_table', object: object, columns: columns

@@ -64,6 +64,10 @@ module Gera
       content_tag :span, buffer, data: { toggle: :tooltip, title: "#{rv2} - #{rv1}" }
     end
 
+    def present_direction(ps_from, ps_to)
+      "#{ps_icon ps_from}(#{ps_from.currency}) &rarr; #{ps_icon ps_to}(#{ps_to.currency})".html_safe
+    end
+
     def rate_with_currency(rate, currency)
       rate = format('%.12f', rate) if rate.is_a?(Float) && rate < MINIMAL_EPSILON
       "#{rate} <span class=text-muted>#{currency}</span>".html_safe

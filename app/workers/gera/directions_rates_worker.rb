@@ -8,7 +8,7 @@ module Gera
 
     Error = Class.new StandardError
 
-    sidekiq_options queue: :critical
+    sidekiq_options queue: :direction_rates
     define_callbacks :perform
 
     # exchange_rate_id - ID of changes exchange_rate
@@ -16,10 +16,15 @@ module Gera
     def perform(*_args) # exchange_rate_id: nil)
       logger.info 'start'
 
-
       run_callbacks :perform do
         DirectionRate.transaction do
-          ExchangeRate.includes(:payment_system_from, :payment_system_to).find_each do |exchange_rate|
+          ExchangeRate
+            .enabled
+            .where(
+              income_payment_system: PaymentSystem.alive.where(income_enabled: true),
+              outcome_payment_system: PaymentSystem.alive.where(outcome_enabled: true),
+            )
+            .includes(:payment_system_from, :payment_system_to).find_each do |exchange_rate|
             safe_create(exchange_rate)
           end
         end

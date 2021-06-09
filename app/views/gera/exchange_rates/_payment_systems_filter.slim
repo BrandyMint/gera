@@ -1,0 +1,8 @@
+ul.nav.nav-pills data={ 'payment-systems-filter' => true }
+  - Gera::ExchangeRatesController::FILTERS.each do |filter|
+    li.nav-item
+      = active_link_to t(filter, scope: [:operator,:exchange_rates,:filter]), 
+        gera.exchange_rate_path(exchange_rate, filter: filter), 
+        data: { 'exchange-rates-filter' => filter }, 
+        class: 'nav-link',
+        active: filter == current_filter

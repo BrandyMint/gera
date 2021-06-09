@@ -1,16 +1,19 @@
 .container-fluid
   .exchange-rates-header
+    h2= present_direction exchange_rate.income_payment_system, exchange_rate.outcome_payment_system
     // Минимальная расчетная ширина 950 (Ксения)
     // Потому что операторы имеют экран на 2000 пикселей и делят его пополам
     .container-fluid style='min-width: 1200px'
       .row
-        .col-xs-3
-          /div style='margin-top: 65px'
-            /= render 'payment_systems_filter', exchange_rate: exchange_rate
+        .col-sm-3
+          = simple_form_for exchange_rate, url: gera.exchange_rate_path(exchange_rate) do |f|
+            = f.input :is_enabled
+            = f.input :commission
+            = f.submit 'Сохранить', class: 'btn btn-primary btn-sm'
 
-        .col-xs-6
+        .col-sm-6
           -# = render 'bestchange_widget', exchange_rate_id: exchange_rate.id
-        .col-xs-3
+        .col-sm-3
           - # Отключил, потому что направление меняется динамически, а ссылка не меняется
           - if false
             .m-b-md= link_to exchange_rate.bestchange_url, target: '_blank' do
@@ -24,9 +27,11 @@
 
   .exchange-rates-body
     .container-scrollable
+      h2 Текущие комиссии
+      .mb-3= render 'payment_systems_filter', exchange_rate: exchange_rate
       .table-exchange-rates-sticky-container data={ 'exchange-rates-update-url' => 'operator_exchange_rate_url(exchange_rate)' }
-        = render 'exchange_rates', exchange_rate: exchange_rate, payment_systems: payment_systems, filtered_payment_systems: payment_systems
+        = render 'exchange_rates', exchange_rate: exchange_rate, payment_systems: payment_systems, filtered_payment_systems: filtered_payment_systems
       javascript:
         document.addEventListener("turbolinks:load", function() {
-          window.reselectExchangeRate(#{exchange_rate.id});
+          window.reselectExchangeRate("#{exchange_rate.id}");
         });

@@ -33,7 +33,7 @@ module Gera
     end
 
     def payment_systems
-      @payment_systems ||= Universe.payment_systems.available.alive
+      @payment_systems ||= Universe.payment_systems.available.alive.ordered
     end
   end
 end

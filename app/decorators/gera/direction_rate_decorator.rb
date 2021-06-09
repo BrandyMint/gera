@@ -15,7 +15,7 @@ module Gera
     end
 
     def direction
-      "#{h.ps_icon object.ps_from}(#{object.ps_from.currency}) &rarr; #{h.ps_icon object.ps_to}(#{object.ps_to.currency})".html_safe
+      h.present_direction object.ps_from, object.ps_to
     end
 
     def title
@@ -23,7 +23,7 @@ module Gera
     end
 
     def ps_comission
-      object.ps_comission.to_percent
+      h.link_to object.ps_comission.to_percent, h.payment_system_path(object.outcome_payment_system)
     end
 
     def created_at
@@ -33,11 +33,11 @@ module Gera
     end
 
     def base_rate_value
-      h.currency_rate_mode_detailed object.currency_rate
+      h.link_to h.currency_rate_mode_detailed(object.currency_rate), h.currency_rate_path(object.currency_rate)
     end
 
     def rate_percent
-      object.rate_percent.to_percent
+      h.link_to object.rate_percent.to_percent, h.exchange_rate_path(object.exchange_rate_id)
     end
 
     def rate_value

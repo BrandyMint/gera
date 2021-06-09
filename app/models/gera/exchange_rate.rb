@@ -119,6 +119,8 @@ module Gera
 
     def direction_rate
       Universe.direction_rates_repository.find_direction_rate_by_exchange_rate_id id
+    rescue Gera::DirectionRatesRepository::FinitRateNotFound
+      nil
     end
 
     private

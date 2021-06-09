@@ -18,7 +18,10 @@ table.table.table-narrow.table-bordered
       th.align-top Чистая прибыль системы
   tbody
     tr
-      td= profit.base_rate.to_rate.format direction_rate.payment_system_from.currency, direction_rate.payment_system_to.currency
+      td
+        = link_to gera.currency_rate_path(direction_rate.currency_rate) do
+          = profit.base_rate.to_rate.format direction_rate.payment_system_from.currency, direction_rate.payment_system_to.currency
+        .text-muted.text-small= l direction_rate.currency_rate.created_at, format: :short
       td= profit.comission.to_percent
       td= profit.finite_rate.to_rate.format direction_rate.payment_system_from.currency, direction_rate.payment_system_to.currency
 

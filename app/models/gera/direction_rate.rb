@@ -110,21 +110,6 @@ module Gera
         .merge currency_rate: currency_rate.dump, dump_version: 1
     end
 
-    def exchange_notification
-      ExchangeNotification.find_by(
-        income_payment_system_id: income_payment_system_id,
-        outcome_payment_system_id: outcome_payment_system_id
-      ) ||
-        ExchangeNotification.find_by(
-          income_payment_system_id: income_payment_system_id,
-          outcome_payment_system_id: nil
-        ) ||
-        ExchangeNotification.find_by(
-          income_payment_system_id: nil,
-          outcome_payment_system_id: outcome_payment_system_id
-        )
-    end
-
     def calculate_rate
       self.base_rate_value = currency_rate.rate_value
       raise UnknownExchangeRate, "No exchange_rate for #{ps_from}->#{ps_to}" unless exchange_rate

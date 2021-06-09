@@ -13,7 +13,7 @@ Gera::Engine.routes.draw do
   end
   resources :external_rates, only: [:index, :show]
 
-  resources :exchange_rates, only: [:show] do
+  resources :exchange_rates, only: [:index, :show, :update] do
     member do
       get :details
     end
