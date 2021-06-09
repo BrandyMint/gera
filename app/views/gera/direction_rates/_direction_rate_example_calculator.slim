@@ -1,17 +1,21 @@
 - income_amount = direction_rate.rate_value.to_rate.in_amount
 - profit = direction_rate.get_profit_result income_amount
-table.table.table-narrow
-  thead
+table.table.table-narrow.table-bordered
+  thead.thead-light
     tr
-      th Базовый курс
-      th Комиссия обменника
-      th Конечный курс
-      th Сумма на входе
-      th Сумма на выходе (клиент получит на счете, сумма к отправке)
-      th Комиссия ПС (%)
-      th Комиссия ПС (абс.)
-      th Сумма которая уйдет с выходящего кошелька (что получит клиент + комиссия ПС)
-      th Чистая прибыль системы
+      th.align-top Базовый курс
+      th.align-top Комиссия обменника
+      th.align-top Конечный курс
+      th.align-top Сумма на входе
+      th.align-top width=200 
+        div Сумма на выходе
+        .text-small.text-muted= "(клиент получит на счете, сумма к отправке)"
+      th.align-top Комиссия ПС (%)
+      th.align-top Комиссия ПС (абс.)
+      th.align-top width=200 
+        div Сумма которая уйдет с выходящего кошелька
+        .text-small.text-muted= "(что получит клиент + комиссия ПС)"
+      th.align-top Чистая прибыль системы
   tbody
     tr
       td= profit.base_rate.to_rate.format direction_rate.payment_system_from.currency, direction_rate.payment_system_to.currency

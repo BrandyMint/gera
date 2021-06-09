@@ -7,8 +7,8 @@ module Gera
     extend  ActiveModel::Naming
     include ActiveModel::Validations
 
-    attribute :payment_system_from_id, Integer, default: ->(_a, _b) { Gera::PaymentSystem.first.id }
-    attribute :payment_system_to_id, Integer, default: ->(_a, _b) { Gera::PaymentSystem.first.id }
+    attribute :payment_system_from_id, String, default: ->(_a, _b) { Gera::PaymentSystem.first.id }
+    attribute :payment_system_to_id, String, default: ->(_a, _b) { Gera::PaymentSystem.first.id }
     attribute :value_type, String, default: 'rate'
 
     def payment_system_from

@@ -1,14 +1,14 @@
-= link_to 'refresh', last_direction_rate_path(direction_rate), class: 'btn btn-success'
+= link_to '&larr; '.html_safe + t('gera.links.direction_rates'), direction_rates_path
+= link_to '⟲', last_direction_rate_path(direction_rate), class: 'btn btn-success float-right'
+
 .row
   .col-md-6
     = render 'direction_rate', direction_rate: direction_rate
   .col-md-6
     = render 'exchange_rate_monitor', exchange_rate: direction_rate.exchange_rate
 
-.m-t-lg
-  hr
+.mt-4
   = render 'direction_rate_example_calculator', direction_rate: direction_rate
 
-.m-t-lg
-  hr
+.mt-4
   = render 'currency_rate', currency_rate: direction_rate.currency_rate
