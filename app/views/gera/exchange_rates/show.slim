@@ -7,9 +7,9 @@
       .row
         .col-sm-3
           = simple_form_for exchange_rate, url: gera.exchange_rate_path(exchange_rate) do |f|
-            = f.input :is_enabled
-            = f.input :commission
-            = f.submit 'Сохранить', class: 'btn btn-primary btn-sm'
+            = f.input :is_enabled, wrapper: :custom_boolean
+            = f.input :commission, wrapper: :input_group, append: '%', input_html: { style: 'max-width: 150px' }, hint: 'Комиссия направления', label: false
+            = f.submit 'Сохранить', class: 'btn btn-primary'
 
         .col-sm-6
           -# = render 'bestchange_widget', exchange_rate_id: exchange_rate.id
