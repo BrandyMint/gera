@@ -14,9 +14,13 @@ module Gera
     alias_attribute :income_payment_system, :ps_from
     alias_attribute :outcome_payment_system, :ps_to
 
-    delegate :id, to: :ps_to, prefix: true
-    delegate :id, to: :ps_from, prefix: true
+    delegate :id, to: :ps_to, prefix: true, allow_nil: true
+    delegate :id, to: :ps_from, prefix: true, allow_nil: true
     delegate :minimal_income_amount, to: :direction_rate, allow_nil: true
+
+    def valid?
+      income_payment_system.present? || outcome_payment_system.present?
+    end
 
     def currency_from
       payment_system_from.currency
