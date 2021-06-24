@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_06_07_065841) do
+ActiveRecord::Schema.define(version: 2021_06_24_120603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -189,8 +189,13 @@ ActiveRecord::Schema.define(version: 2021_06_07_065841) do
     t.datetime "updated_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.datetime "created_at", default: -> { "CURRENT_TIMESTAMP" }, null: false
     t.boolean "is_available", default: true, null: false
-    t.string "icon_url"
+    t.string "icon"
     t.float "commission", default: 0.0, null: false
+    t.decimal "minimal_income_amount_cents", default: "0.0", null: false
+    t.decimal "maximal_income_amount_cents"
+    t.decimal "minimal_outcome_amount_cents"
+    t.decimal "maximal_outcome_amount_cents"
+    t.boolean "require_verify", default: false, null: false
     t.index ["income_enabled"], name: "index_payment_systems_on_income_enabled"
     t.index ["outcome_enabled"], name: "index_payment_systems_on_outcome_enabled"
   end
