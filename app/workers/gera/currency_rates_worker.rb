@@ -57,7 +57,7 @@ module Gera
       if defined? Bugsnag
         Bugsnag.notify err do |b|
           b.meta_data = { pair: pair }
-        end
+        end unless err.is_a? Error
       end
     end
   end
